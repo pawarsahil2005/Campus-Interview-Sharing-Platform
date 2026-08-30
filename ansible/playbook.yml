@@ -1,0 +1,81 @@
+---
+- name: Configure and deploy Campus Interview Platform
+  hosts: webserver
+  become: true
+
+  vars:
+    app_port: "5000"
+
+    mongodb_uri: "mongodb+srv://sahilpawarsp045_db_user:SzTyI2cPH7SnYZUB@cluster0.pljunnn.mongodb.net/?appName=Cluster0"
+
+    jwt_secret: "pccoe_campus_interview_platform_secret_key_2024"
+    jwt_expire: "7d"
+
+    node_env: "development"
+
+    admin_email: "sahilpawarsp045@gmail.com"
+    admin_password: "Admin@12345"
+    admin_name: "Sahil Pawar"
+
+    smtp_host: "smtp.gmail.com"
+    smtp_port: "465"
+    smtp_secure: "true"
+    smtp_user: "shaileshx006068@gmail.com"
+    smtp_pass: "wngljwlzzbputrjn"
+    smtp_from: "shaileshx006068@gmail.com"
+
+  tasks:
+
+    - name: Update apt package index
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull application image from Docker Hub
+      community.docker.docker_image:
+        name: sahilpawar45/pccoe-campus-platform
+        tag: latest
+        source: pull
+
+    - name: Stop existing application container
+      community.docker.docker_container:
+        name: campus-interview
+        state: absent
+
+    - name: Start application container
+      community.docker.docker_container:
+        name: campus-interview
+        image: sahilpawar45/pccoe-campus-platform:latest
+        state: started
+        restart_policy: unless-stopped
+        ports:
+          - "5000:5000"
+        env:
+          PORT: "{{ app_port }}"
+          MONGODB_URI: "{{ mongodb_uri }}"
+
+          JWT_SECRET: "{{ jwt_secret }}"
+          JWT_EXPIRE: "{{ jwt_expire }}"
+
+          NODE_ENV: "{{ node_env }}"
+
+          ADMIN_EMAIL: "{{ admin_email }}"
+          ADMIN_PASSWORD: "{{ admin_password }}"
+          ADMIN_NAME: "{{ admin_name }}"
+
+          SMTP_HOST: "{{ smtp_host }}"
+          SMTP_PORT: "{{ smtp_port }}"
+          SMTP_SECURE: "{{ smtp_secure }}"
+          SMTP_USER: "{{ smtp_user }}"
+          SMTP_PASS: "{{ smtp_pass }}"
+          SMTP_FROM: "{{ smtp_from }}"

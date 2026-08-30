@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Experience - PCCOE Campus Interview Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>PCCOE Interviews</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/experiences" class="nav-link">Experiences</a>
+                <a href="/questions" class="nav-link">Questions Bank</a>
+                <a href="/calendar" class="nav-link">Calendar</a>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+            </div>
+            <div class="nav-user-area">
+                <span class="user-greeting" id="userGreeting">Hello, User</span>
+                <button class="btn btn-outline btn-sm" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-plus-circle"></i> Submit Interview Experience</h1>
+            <p>Share your campus interview experience with juniors</p>
+        </div>
+    </section>
+
+    <!-- Submit Form -->
+    <section class="submit-page">
+        <div class="container">
+            <div class="submit-form-container">
+                <form id="submitExperienceForm" class="submit-form">
+                    <div class="form-section">
+                        <h3><i class="fas fa-building"></i> Company Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="companyName">Company Name *</label>
+                                <input type="text" id="companyName" name="companyName" required placeholder="e.g., TCS, Infosys, Wipro">
+                            </div>
+                            <div class="form-group">
+                                <label for="jobRole">Job Role *</label>
+                                <input type="text" id="jobRole" name="jobRole" required placeholder="e.g., Software Developer, Data Analyst">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="interviewDate">Interview Date *</label>
+                                <input type="date" id="interviewDate" name="interviewDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="packageOffered">Package Offered (Optional)</label>
+                                <input type="text" id="packageOffered" name="packageOffered" placeholder="e.g., 4.5 LPA, 7 LPA">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-layer-group"></i> Interview Rounds</h3>
+                        <p class="form-help">Add details about each interview round you went through</p>
+                        <div id="roundsContainer">
+                            <!-- Rounds will be added dynamically -->
+                        </div>
+                        <button type="button" class="btn btn-outline" id="addRoundBtn">
+                            <i class="fas fa-plus"></i> Add Interview Round
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-question-circle"></i> Questions Asked</h3>
+                        <p class="form-help">Add important questions that were asked during the interview</p>
+                        <div id="questionsContainer">
+                            <div class="question-input">
+                                <input type="text" name="questions[]" placeholder="Enter a question that was asked">
+                                <button type="button" class="btn-remove-question">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline" id="addQuestionBtn">
+                            <i class="fas fa-plus"></i> Add Another Question
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Experience Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="difficulty">Difficulty Level *</label>
+                                <select id="difficulty" name="difficulty" required>
+                                    <option value="">Select Difficulty</option>
+                                    <option value="Easy">Easy - Basic questions, straightforward process</option>
+                                    <option value="Medium">Medium - Moderate difficulty, some challenging questions</option>
+                                    <option value="Hard">Hard - Very challenging, in-depth technical questions</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="experienceType">Overall Experience *</label>
+                                <select id="experienceType" name="experienceType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Positive">Positive - Good experience, professional process</option>
+                                    <option value="Neutral">Neutral - Average experience</option>
+                                    <option value="Negative">Negative - Poor experience, unprofessional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectionStatus">Selection Status *</label>
+                            <select id="selectionStatus" name="selectionStatus" required>
+                                <option value="Waiting">Waiting for Results</option>
+                                <option value="Selected">Selected</option>
+                                <option value="Not Selected">Not Selected</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tips">Preparation Tips & Advice *</label>
+                            <textarea id="tips" name="tips" rows="5" required placeholder="Share your preparation strategy, resources you used, and advice for juniors preparing for similar interviews..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-check">
+                            <input type="checkbox" id="isAnonymous" name="isAnonymous">
+                            <label for="isAnonymous">
+                                <i class="fas fa-user-secret"></i> Submit Anonymously
+                                <span class="check-help">Your name will not be shown to other students</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Your submission will be reviewed by the TPO before being published. This usually takes 1-2 days.</span>
+                    </div>
+
+                    <div class="form-error" id="submitFormError"></div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline btn-lg" onclick="window.history.back()">
+                            <i class="fas fa-arrow-left"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Submit Experience
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content modal-success">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Experience Submitted!</h2>
+            <p>Thank you for sharing your interview experience. It will be reviewed by the TPO and published soon.</p>
+            <div class="modal-actions">
+                <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+                <a href="/experiences" class="btn btn-outline">Browse Experiences</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer footer-minimal">
+        <div class="container">
+            <p>&copy; 2024 PCCOE Campus Interview Platform</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Success!</span>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/submit.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Details - PCCOE Campus Interview Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>PCCOE Interviews</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/experiences" class="nav-link">Experiences</a>
+                <a href="/questions" class="nav-link">Questions Bank</a>
+                <a href="/calendar" class="nav-link">Calendar</a>
+                <div class="nav-auth" id="navAuth">
+                    <a href="/login" class="btn btn-outline">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                </div>
+                <div class="nav-user" id="navUser" style="display: none;">
+                    <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+                    <button class="btn btn-primary" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="/">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="/experiences">Experiences</a>
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbCompany">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="experience-detail-page">
+        <div class="container">
+            <div class="experience-detail-content" id="experienceContent">
+                <div class="loading-spinner loading-lg">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading experience details...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Experiences -->
+    <section class="related-experiences">
+        <div class="container">
+            <h2><i class="fas fa-link"></i> Related Experiences</h2>
+            <div class="experiences-grid" id="relatedExperiences">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 PCCOE Campus Interview Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/experience-detail.js"></script>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Success!</span>
+        </div>
+    </div>
+
+    <!-- Answer Modal -->
+    <div class="modal" id="answerModal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2><i class="fas fa-pen"></i> Add Your Answer</h2>
+                <button class="modal-close" id="closeAnswerModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="question-preview" id="answerQuestionPreview"></div>
+                <form id="answerForm">
+                    <input type="hidden" id="answerRoundIndex">
+                    <input type="hidden" id="answerQuestionIndex">
+                    <input type="hidden" id="answerQuestionText">
+                    <div class="form-group">
+                        <label class="form-label">Your Answer <span class="required">*</span></label>
+                        <textarea id="answerText" class="form-control" rows="6"
+                            placeholder="Explain the concept, give examples, mention edge cases..." maxlength="3000"></textarea>
+                        <small class="form-hint"><span id="charCount">0</span>/3000 characters</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label checkbox-label">
+                            <input type="checkbox" id="answerAnonymous"> Post anonymously
+                        </label>
+                    </div>
+                    <div id="answerLoginNotice" class="alert alert-warning" style="display:none;">
+                        <i class="fas fa-info-circle"></i> Please <a href="/login">login</a> to submit an answer.
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submitAnswerBtn">
+                            <i class="fas fa-paper-plane"></i> Submit Answer
+                        </button>
+                        <button type="button" class="btn btn-outline" id="cancelAnswer">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

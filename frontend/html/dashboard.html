@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PCCOE Campus Interview Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>PCCOE Interviews</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/experiences" class="nav-link">Experiences</a>
+                <a href="/questions" class="nav-link">Questions Bank</a>
+                <a href="/calendar" class="nav-link">Calendar</a>
+                <a href="/dashboard" class="nav-link active">Dashboard</a>
+            </div>
+            <div class="nav-user-area">
+                <span class="user-greeting" id="userGreeting">Hello, User</span>
+                <button class="btn btn-outline btn-sm" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-info">
+                    <h4 id="userName">Student Name</h4>
+                    <span class="user-role" id="userRole">Student</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="sidebar-link active" data-section="overview">
+                    <i class="fas fa-home"></i> Overview
+                </a>
+                <a href="#experiences" class="sidebar-link" data-section="experiences">
+                    <i class="fas fa-file-alt"></i> Browse Experiences
+                </a>
+                <a href="#saved" class="sidebar-link" data-section="saved">
+                    <i class="fas fa-bookmark"></i> Saved
+                </a>
+                <a href="#my-submissions" class="sidebar-link final-year-only" data-section="my-submissions" style="display: none;">
+                    <i class="fas fa-paper-plane"></i> My Submissions
+                </a>
+                <a href="#submit" class="sidebar-link final-year-only" data-section="submit" style="display: none;">
+                    <i class="fas fa-plus-circle"></i> Submit Experience
+                </a>
+                <a href="#profile" class="sidebar-link" data-section="profile">
+                    <i class="fas fa-user"></i> My Profile
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-home"></i> Dashboard Overview</h2>
+                </div>
+                
+                <div class="welcome-card">
+                    <div class="welcome-content">
+                        <h3 id="welcomeMessage">Welcome back!</h3>
+                        <p id="welcomeDesc">Explore interview experiences and prepare for your placements.</p>
+                    </div>
+                    <div class="welcome-image">
+                        <img src="https://illustrations.popsy.co/amber/remote-work.svg" alt="Welcome">
+                    </div>
+                </div>
+
+                <div class="quick-stats">
+                    <div class="quick-stat-card">
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <h4 id="totalExperiences">0</h4>
+                            <p>Total Experiences</p>
+                        </div>
+                    </div>
+                    <div class="quick-stat-card">
+                        <i class="fas fa-building"></i>
+                        <div>
+                            <h4 id="totalCompanies">0</h4>
+                            <p>Companies</p>
+                        </div>
+                    </div>
+                    <div class="quick-stat-card final-year-only" style="display: none;">
+                        <i class="fas fa-paper-plane"></i>
+                        <div>
+                            <h4 id="mySubmissions">0</h4>
+                            <p>My Submissions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-experiences">
+                    <h3><i class="fas fa-clock"></i> Recent Experiences</h3>
+                    <div class="experiences-list" id="recentExperiencesList">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Browse Experiences Section -->
+            <section id="experiences" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-alt"></i> Browse Experiences</h2>
+                </div>
+                
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <input type="text" id="searchInput" placeholder="Search by company or role..." class="search-input">
+                    </div>
+                    <div class="filter-group">
+                        <select id="companyFilter" class="filter-select">
+                            <option value="">All Companies</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="difficultyFilter" class="filter-select">
+                            <option value="">All Difficulties</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="yearFilter" class="filter-select">
+                            <option value="">All Years</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="applyFilters">
+                        <i class="fas fa-filter"></i> Apply
+                    </button>
+                    <button class="btn btn-outline" id="clearFilters">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+
+                <div class="experiences-grid" id="experiencesGrid">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Saved Section -->
+            <section id="saved" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-bookmark"></i> Saved Items</h2>
+                </div>
+                
+                <div class="saved-tabs">
+                    <button class="saved-tab active" data-tab="saved-experiences">
+                        <i class="fas fa-file-alt"></i> Saved Experiences
+                    </button>
+                    <button class="saved-tab" data-tab="saved-questions">
+                        <i class="fas fa-question-circle"></i> Saved Questions
+                    </button>
+                </div>
+
+                <div id="saved-experiences" class="saved-content active">
+                    <div class="saved-grid" id="savedExperiencesGrid">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                    <div class="empty-state" id="noSavedExperiences" style="display: none;">
+                        <i class="fas fa-bookmark"></i>
+                        <h3>No saved experiences</h3>
+                        <p>Browse experiences and click the bookmark icon to save them for later.</p>
+                        <a href="#experiences" class="btn btn-primary" data-section="experiences">
+                            <i class="fas fa-search"></i> Browse Experiences
+                        </a>
+                    </div>
+                </div>
+
+                <div id="saved-questions" class="saved-content">
+                    <div class="saved-questions-list" id="savedQuestionsList">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                    <div class="empty-state" id="noSavedQuestions" style="display: none;">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>No saved questions</h3>
+                        <p>Visit the Questions Bank and save questions for quick reference.</p>
+                        <a href="/questions" class="btn btn-primary">
+                            <i class="fas fa-question-circle"></i> Questions Bank
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Submissions Section (Final Year Only) -->
+            <section id="my-submissions" class="dashboard-section final-year-only">
+                <div class="section-header">
+                    <h2><i class="fas fa-paper-plane"></i> My Submissions</h2>
+                    <a href="#submit" class="btn btn-primary" data-section="submit">
+                        <i class="fas fa-plus"></i> New Submission
+                    </a>
+                </div>
+                
+                <div class="submissions-list" id="submissionsList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Submit Experience Section (Final Year Only) -->
+            <section id="submit" class="dashboard-section final-year-only">
+                <div class="section-header">
+                    <h2><i class="fas fa-plus-circle"></i> Submit Interview Experience</h2>
+                </div>
+                
+                <div class="submit-form-container">
+                    <form id="submitExperienceForm" class="submit-form">
+                        <div class="form-section">
+                            <h3><i class="fas fa-building"></i> Company Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="companyName">Company Name *</label>
+                                    <input type="text" id="companyName" name="companyName" required placeholder="e.g., TCS, Infosys">
+                                </div>
+                                <div class="form-group">
+                                    <label for="jobRole">Job Role *</label>
+                                    <input type="text" id="jobRole" name="jobRole" required placeholder="e.g., Software Developer">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="interviewDate">Interview Date *</label>
+                                    <input type="date" id="interviewDate" name="interviewDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="packageOffered">Package Offered</label>
+                                    <input type="text" id="packageOffered" name="packageOffered" placeholder="e.g., 4.5 LPA">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3><i class="fas fa-layer-group"></i> Interview Rounds</h3>
+                            <div id="roundsContainer">
+                                <!-- Rounds will be added dynamically -->
+                            </div>
+                            <button type="button" class="btn btn-outline" id="addRoundBtn">
+                                <i class="fas fa-plus"></i> Add Round
+                            </button>
+                        </div>
+
+                        <div class="form-section">
+                            <h3><i class="fas fa-question-circle"></i> Questions Asked</h3>
+                            <div id="questionsContainer">
+                                <div class="question-input">
+                                    <input type="text" name="questions[]" placeholder="Enter a question asked">
+                                    <button type="button" class="btn-remove-question">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline" id="addQuestionBtn">
+                                <i class="fas fa-plus"></i> Add Question
+                            </button>
+                        </div>
+
+                        <div class="form-section">
+                            <h3><i class="fas fa-info-circle"></i> Experience Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="difficulty">Difficulty Level *</label>
+                                    <select id="difficulty" name="difficulty" required>
+                                        <option value="">Select Difficulty</option>
+                                        <option value="Easy">Easy</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Hard">Hard</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="experienceType">Overall Experience *</label>
+                                    <select id="experienceType" name="experienceType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Positive">Positive</option>
+                                        <option value="Neutral">Neutral</option>
+                                        <option value="Negative">Negative</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectionStatus">Selection Status</label>
+                                <select id="selectionStatus" name="selectionStatus">
+                                    <option value="Waiting">Waiting</option>
+                                    <option value="Selected">Selected</option>
+                                    <option value="Not Selected">Not Selected</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tips">Preparation Tips & Advice</label>
+                                <textarea id="tips" name="tips" rows="4" placeholder="Share your preparation tips and advice for juniors..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <div class="form-check">
+                                <input type="checkbox" id="isAnonymous" name="isAnonymous">
+                                <label for="isAnonymous">Submit Anonymously</label>
+                            </div>
+                        </div>
+
+                        <div class="form-error" id="submitFormError"></div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                <i class="fas fa-paper-plane"></i> Submit Experience
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user"></i> My Profile</h2>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-item">
+                            <label>Name</label>
+                            <p id="profileName">-</p>
+                        </div>
+                        <div class="profile-item">
+                            <label>Email</label>
+                            <p id="profileEmail">-</p>
+                        </div>
+                        <div class="profile-item">
+                            <label>Roll Number</label>
+                            <p id="profileRollNumber">-</p>
+                        </div>
+                        <div class="profile-item">
+                            <label>Branch</label>
+                            <p id="profileBranch">-</p>
+                        </div>
+                        <div class="profile-item">
+                            <label>Year</label>
+                            <p id="profileYear">-</p>
+                        </div>
+                        <div class="profile-item">
+                            <label>Role</label>
+                            <p id="profileRole">-</p>
+                        </div>
+                        <div class="profile-item">
+                            <label>Member Since</label>
+                            <p id="profileCreatedAt">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn btn-outline" id="changePasswordBtn">
+                        <i class="fas fa-key"></i> Change Password
+                    </button>
+                </div>
+
+                <!-- Change Password Modal -->
+                <div class="modal" id="changePasswordModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Change Password</h3>
+                            <button class="modal-close" id="closePasswordModal">&times;</button>
+                        </div>
+                        <form id="changePasswordForm">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" required minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Confirm New Password</label>
+                                <input type="password" id="confirmNewPassword" required>
+                            </div>
+                            <div class="form-error" id="passwordFormError"></div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Success!</span>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

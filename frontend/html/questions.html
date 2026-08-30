@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions Bank - PCCOE Campus Interview Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>PCCOE Interviews</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/experiences" class="nav-link">Experiences</a>
+                <a href="/questions" class="nav-link active">Questions Bank</a>
+                <a href="/calendar" class="nav-link">Calendar</a>
+                <div class="nav-auth" id="navAuth">
+                    <a href="/login" class="btn btn-outline">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                </div>
+                <div class="nav-user" id="navUser" style="display: none;">
+                    <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+                    <button class="btn btn-primary" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-question-circle"></i> Questions Bank</h1>
+            <p>Real interview questions from PCCOE students — tagged by company &amp; round type</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="experiences-page">
+        <div class="container">
+            <!-- Filter Sidebar -->
+            <aside class="filter-sidebar">
+                <div class="filter-card">
+                    <h3><i class="fas fa-search"></i> Search</h3>
+                    <input type="text" id="searchInput" placeholder="Search questions..." class="search-input">
+                </div>
+
+                <div class="filter-card">
+                    <h3><i class="fas fa-building"></i> Company</h3>
+                    <select id="companyFilter" class="filter-select">
+                        <option value="">All Companies</option>
+                    </select>
+                </div>
+
+                <div class="filter-card">
+                    <h3><i class="fas fa-layer-group"></i> Round Type</h3>
+                    <div class="filter-options" id="roundTypeFilters">
+                        <label class="filter-checkbox">
+                            <input type="radio" name="roundType" value=""> All
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="radio" name="roundType" value="Technical"> Technical
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="radio" name="roundType" value="HR"> HR
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="radio" name="roundType" value="Aptitude"> Aptitude
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="radio" name="roundType" value="Group Discussion"> Group Discussion
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="radio" name="roundType" value="Managerial"> Managerial
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <h3><i class="fas fa-tags"></i> Topics</h3>
+                    <div class="filter-options topic-filter-options">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="DSA"> DSA
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="OOPs"> OOPs
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="DBMS"> DBMS
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Operating Systems"> Operating Systems
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Computer Networks"> Computer Networks
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Coding"> Coding
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Web Development"> Web Development
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Backend Development"> Backend Development
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Machine Learning"> Machine Learning
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Online Assessment"> Online Assessment
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Technical Interview"> Technical Interview
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="HR Interview"> HR Interview
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Aptitude"> Aptitude
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Logical Reasoning"> Logical Reasoning
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="topicTag" value="Project Discussion"> Project Discussion
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button class="btn btn-primary btn-block" id="applyFilters">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                    <button class="btn btn-outline btn-block" id="clearFilters">
+                        <i class="fas fa-times"></i> Clear All
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Questions Content -->
+            <div class="experiences-content">
+                <div class="results-header">
+                    <p id="resultsCount">Loading questions...</p>
+                </div>
+
+                <div id="questionsList" class="questions-bank-list">
+                    <!-- Questions loaded by JS -->
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display:none;">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>No questions found</h3>
+                    <p>Try adjusting your search or filters</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Answer Modal -->
+    <div class="modal" id="answerModal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2 id="answerModalTitle"><i class="fas fa-pen"></i> Add Your Answer</h2>
+                <button class="modal-close" id="closeAnswerModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="question-preview" id="answerQuestionPreview"></div>
+                <form id="answerForm">
+                    <input type="hidden" id="answerExpId">
+                    <input type="hidden" id="answerRoundIndex">
+                    <input type="hidden" id="answerQuestionIndex">
+                    <input type="hidden" id="answerQuestionText">
+
+                    <div class="form-group">
+                        <label class="form-label">Your Answer <span class="required">*</span></label>
+                        <textarea id="answerText" class="form-control" rows="6"
+                            placeholder="Share your knowledge — explain the concept, give examples, mention edge cases..."
+                            maxlength="3000"></textarea>
+                        <small class="form-hint"><span id="charCount">0</span>/3000 characters</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label checkbox-label">
+                            <input type="checkbox" id="answerAnonymous">
+                            Post anonymously
+                        </label>
+                    </div>
+                    <div id="answerLoginNotice" class="alert alert-warning" style="display:none;">
+                        <i class="fas fa-info-circle"></i> Please <a href="/login">login</a> to submit an answer.
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submitAnswerBtn">
+                            <i class="fas fa-paper-plane"></i> Submit Answer
+                        </button>
+                        <button type="button" class="btn btn-outline" id="cancelAnswer">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Success!</span>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/questions.js"></script>
+</body>
+
+</html>

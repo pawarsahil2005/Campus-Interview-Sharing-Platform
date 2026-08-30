@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCCOE Campus Interview Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../images/pccoe-logo.png" alt="PCCOE" class="nav-logo-img">
+                <span>PCCOE Interviews</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/experiences" class="nav-link">Experiences</a>
+                <a href="/questions" class="nav-link">Questions Bank</a>
+                <a href="/calendar" class="nav-link">Calendar</a>
+                <div class="nav-auth" id="navAuth">
+                    <a href="/login" class="btn btn-outline">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                </div>
+                <div class="nav-user" id="navUser" style="display: none;">
+                    <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+                    <button class="btn btn-primary" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Campus Interview Experiences</h1>
+            <p>Learn from your seniors' interview experiences at PCCOE. Get real insights, tips, and preparation strategies for your campus placements.</p>
+            <div class="hero-buttons">
+                <a href="/experiences" class="btn btn-primary btn-lg">
+                    <i class="fas fa-search"></i> Explore Experiences
+                </a>
+                <a href="/register" class="btn btn-outline btn-lg">
+                    <i class="fas fa-user-plus"></i> Join Now
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="../images/hero.png" alt="Campus interview preparation">
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-building"></i>
+                    <h3 id="companyCount">50+</h3>
+                    <p>Companies</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3 id="experienceCount">200+</h3>
+                    <p>Experiences</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3 id="studentCount">500+</h3>
+                    <p>Students</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3>4.8</h3>
+                    <p>Average Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Use This Platform?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3>Real Experiences</h3>
+                    <p>Read authentic interview experiences shared by PCCOE students who have been through the process.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3>Smart Filters</h3>
+                    <p>Filter experiences by company, role, difficulty level, and year to find exactly what you need.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Preparation Tips</h3>
+                    <p>Get valuable tips and strategies from students who successfully cracked their interviews.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>Interview Questions</h3>
+                    <p>Access actual questions asked in different interview rounds to prepare effectively.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Verified Content</h3>
+                    <p>All experiences are reviewed by TPO before publishing to ensure quality and authenticity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3>Anonymous Sharing</h3>
+                    <p>Final year students can share experiences anonymously if they prefer privacy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Experiences Section -->
+    <section class="recent-section">
+        <div class="container">
+            <h2 class="section-title">Recent Experiences</h2>
+            <div class="experiences-grid" id="recentExperiences">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading experiences...</p>
+                </div>
+            </div>
+            <div class="section-footer">
+                <a href="/experiences" class="btn btn-primary">View All Experiences</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Register</h3>
+                    <p>Sign up using your PCCOE email (@pccoepune.org)</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Explore</h3>
+                    <p>Browse interview experiences from various companies</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Filter</h3>
+                    <p>Use filters to find experiences relevant to you</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Prepare</h3>
+                    <p>Learn from tips and questions shared by seniors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Prepare for Your Dream Job?</h2>
+                <p>Join hundreds of PCCOE students who are preparing smarter with real interview insights.</p>
+                <a href="/register" class="btn btn-light btn-lg">Get Started Free</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PCCOE Interview Platform</h3>
+                    <p>Helping students prepare better for campus placements with real interview experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/experiences">Experiences</a></li>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> tpo@pccoepune.org</p>
+                    <p><i class="fas fa-phone"></i> +91 20 2765 3168</p>
+                    <p><i class="fas fa-map-marker-alt"></i> PCCOE, Nigdi, Pune</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PCCOE Campus Interview Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Success!</span>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/home.js"></script>
+</body>
+</html>
