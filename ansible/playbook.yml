@@ -7,7 +7,7 @@
     app_port: "5000"
 
     mongodb_uri: "mongodb+srv://sahilpawarsp045_db_user:SzTyI2cPH7SnYZUB@cluster0.pljunnn.mongodb.net/?appName=Cluster0"
-
+                  
     jwt_secret: "pccoe_campus_interview_platform_secret_key_2024"
     jwt_expire: "7d"
 

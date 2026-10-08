@@ -43,10 +43,10 @@ resource "aws_security_group" "campus_sg" {
 }
 
 resource "aws_instance" "campus_server" {
-  ami           = "ami-01a00762f46d584a1"
+  ami           = "ami-065d2b03fb493085a"
   instance_type = "t3.micro"
 
-  key_name = "keypair"
+  key_name = "campus-key-pair"
 
   vpc_security_group_ids = [
     aws_security_group.campus_sg.id
