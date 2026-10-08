@@ -1,0 +1,82 @@
+name: Campus Interview CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci-cd:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1. Checkout source code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Verify application starts
+      - name: Verify Node.js application
+        run: node --check backend/server.js
+
+      # 5. Setup Docker
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 6. Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 7. Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f ansible/Dockerfile \
+            -t sahilpawar45/pccoe-campus-platform:latest \
+            .
+
+      # 8. Push Docker image
+      - name: Push Docker image
+        run: |
+          docker push sahilpawar45/pccoe-campus-platform:latest
+
+      # 9. Create SSH key
+      - name: Setup SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/mykey.pem
+          chmod 600 /tmp/mykey.pem
+
+      # 10. Install Ansible
+      - name: Install Ansible
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install ansible
+
+      # 11. Deploy using Ansible
+      - name: Deploy to EC2
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+        run: |
+          ansible-playbook \
+            -i ansible/inventory \
+            ansible/playbook.yml \
+            -e "ansible_ssh_private_key_file=/tmp/mykey.pem" \
+            -e "ansible_host_key_checking=False"
