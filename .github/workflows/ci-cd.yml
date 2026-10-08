@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4. Verify application starts
+      # 4. Verify Node.js application
       - name: Verify Node.js application
         run: node --check backend/server.js
 
@@ -45,20 +45,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 7. Build Docker image
+      # 7. Build Docker image using Git commit SHA
       - name: Build Docker image
         run: |
           docker build \
             -f Dockerfile \
-            -t sahilpawar45/pccoe-campus-platform:latest \
+            -t sahilpawar45/pccoe-campus-platform:${{ github.sha }} \
             .
 
       # 8. Push Docker image
       - name: Push Docker image
         run: |
-          docker push sahilpawar45/pccoe-campus-platform:latest
+          docker push sahilpawar45/pccoe-campus-platform:${{ github.sha }}
 
-      # 9. Create SSH key
+      # 9. Setup SSH key
       - name: Setup SSH key
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/mykey.pem
@@ -79,4 +79,5 @@ jobs:
             -i ansible/inventory \
             ansible/playbook.yml \
             -e "ansible_ssh_private_key_file=/tmp/mykey.pem" \
-            -e "ansible_host_key_checking=False"
+            -e "ansible_host_key_checking=False" \
+            -e "image_tag=${{ github.sha }}"
