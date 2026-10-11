@@ -315,6 +315,9 @@ function setupMobileNav() {
 
 // Initialize common functionality
 document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.current-year').forEach((year) => {
+        year.textContent = new Date().getFullYear();
+    });
     theme.init();
     setupMobileNav();
 });
