@@ -52,6 +52,13 @@ resource "aws_instance" "campus_server" {
     aws_security_group.campus_sg.id
   ]
 
+  # Increase root EBS volume for Docker,
+  # Prometheus, Grafana and application images
+  root_block_device {
+    volume_size = 20
+    volume_type = "gp3"
+  }
+
   tags = {
     Name = "PCCOE-Campus-Interview-Server"
   }
