@@ -114,6 +114,29 @@
         group: ubuntu
         mode: '0644'
 
+    - name: Free monitoring ports from old manual containers or services
+      shell: |
+        for port in 9090 3000; do
+          for cid in $(docker ps -a -q --filter "publish=$port"); do
+            net=$(docker inspect -f '{% raw %}{{range $k, $v := .NetworkSettings.Networks}}{{$k}} {{end}}{% endraw %}' "$cid" 2>/dev/null)
+            status=$(docker inspect -f '{% raw %}{{.State.Status}}{% endraw %}' "$cid" 2>/dev/null)
+            if [ "$status" != "running" ] || echo "$net" | grep -qv "monitoring"; then
+              docker stop "$cid" || true
+              docker rm -f "$cid" || true
+            fi
+          done
+        done
+        systemctl stop prometheus 2>/dev/null || true
+        systemctl disable prometheus 2>/dev/null || true
+        systemctl stop grafana-server 2>/dev/null || true
+        systemctl disable grafana-server 2>/dev/null || true
+        if command -v fuser >/dev/null 2>&1; then
+          fuser -k 9090/tcp 2>/dev/null || true
+          fuser -k 3000/tcp 2>/dev/null || true
+        fi
+      changed_when: false
+      failed_when: false
+
     - name: Start Prometheus
       community.docker.docker_container:
         name: prometheus
