@@ -79,3 +79,59 @@
           SMTP_USER: "{{ smtp_user }}"
           SMTP_PASS: "{{ smtp_pass }}"
           SMTP_FROM: "{{ smtp_from }}"
+
+    - name: Create monitoring Docker network
+      community.docker.docker_network:
+        name: monitoring
+        state: present
+
+    - name: Start Node Exporter
+      community.docker.docker_container:
+        name: node-exporter
+        image: prom/node-exporter:latest
+        state: started
+        restart_policy: unless-stopped
+        network_mode: monitoring
+        pid_mode: host
+        volumes:
+          - /:/host:ro,rslave
+        command:
+          - --path.rootfs=/host
+
+    - name: Create monitoring directory
+      file:
+        path: /home/ubuntu/monitoring
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+    - name: Copy Prometheus configuration
+      copy:
+        src: monitoring/prometheus.yml
+        dest: /home/ubuntu/monitoring/prometheus.yml
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
+    - name: Start Prometheus
+      community.docker.docker_container:
+        name: prometheus
+        image: prom/prometheus:latest
+        state: started
+        restart_policy: unless-stopped
+        network_mode: monitoring
+        ports:
+          - "9090:9090"
+        volumes:
+          - /home/ubuntu/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+    - name: Start Grafana
+      community.docker.docker_container:
+        name: grafana
+        image: grafana/grafana:latest
+        state: started
+        restart_policy: unless-stopped
+        network_mode: monitoring
+        ports:
+          - "3000:3000"
