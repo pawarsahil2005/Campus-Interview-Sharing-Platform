@@ -86,6 +86,7 @@ jobs:
         run: |
           python3 -m pip install --user ansible
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ansible-galaxy collection install community.docker
 
       - name: Deploy using Ansible
         env:
