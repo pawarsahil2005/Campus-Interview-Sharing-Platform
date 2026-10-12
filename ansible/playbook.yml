@@ -41,6 +41,15 @@
         state: started
         enabled: yes
 
+    - name: Free disk space by cleaning unused Docker data and caches
+      shell: |
+        docker container prune -f 2>/dev/null || true
+        docker image prune -af 2>/dev/null || true
+        apt-get clean 2>/dev/null || true
+        journalctl --vacuum-time=1d 2>/dev/null || true
+      changed_when: false
+      failed_when: false
+
     - name: Pull application image from Docker Hub
       community.docker.docker_image:
         name: sahilpawar45/pccoe-campus-platform
@@ -134,6 +143,7 @@
           fuser -k 9090/tcp 2>/dev/null || true
           fuser -k 3000/tcp 2>/dev/null || true
         fi
+        docker image prune -af 2>/dev/null || true
       changed_when: false
       failed_when: false
 
